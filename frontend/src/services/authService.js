@@ -58,11 +58,22 @@ const setupAdmin = async (adminData) => {
 //   }
 // };
 
+const registerUser = async (userData) => {
+  try {
+    // This route is protected, so only admins can call it.
+    const response = await apiClient.post('/auth/register', userData);
+    return response.data;
+  } catch (error) {
+    const message = error.response?.data?.message || 'User registration failed.';
+    throw new Error(message);
+  }
+};
+
 const authService = {
   login,
   fetchCurrentUser,
   setupAdmin,
-  // registerUser,
+  registerUser,
 };
 
 export default authService;

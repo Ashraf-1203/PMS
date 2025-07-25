@@ -95,6 +95,7 @@ const Sidebar = ({ userPermissions /* { pageKey: ['action1', 'action2'], ... } *
         { key: 'receive', label: 'Receive Paper', path: '/inventory/receive', pageKey: 'receivePaper' },
         { key: 'reject', label: 'Reject Paper', path: '/inventory/reject', pageKey: 'rejectPaper' },
         { key: 'transfer', label: 'Transfer Paper', path: '/inventory/transfer', pageKey: 'transferPaper' },
+        { key: 'pendingTransfers', label: 'Pending Transfers', path: '/inventory/pending-transfers', pageKey: 'pendingTransfers' },
         { key: 'issued', label: 'Issued Paper', path: '/inventory/issued', pageKey: 'issuedPaperList' },
         { key: 'returned', label: 'Returned Paper', path: '/inventory/returned', pageKey: 'returnedPaperList' },
       ],
@@ -141,7 +142,7 @@ const Sidebar = ({ userPermissions /* { pageKey: ['action1', 'action2'], ... } *
   const currentPermissions = userPermissions || {};
 
   return (
-    <aside className={`bg-gray-50 dark:bg-gray-800 transition-width duration-300 ease-in-out ${isCollapsed ? 'w-20' : 'w-64'} h-screen sticky top-0 shadow-md flex flex-col`}>
+<aside className={`bg-gray-50 dark:bg-gray-800 transition-width duration-300 ease-in-out ${isCollapsed ? 'w-20' : 'w-64'} h-screen sticky top-0 shadow-md flex flex-col z-30`}>
       <div className="flex items-center justify-between p-4 h-16 border-b dark:border-gray-700">
         {!isCollapsed && <span className="text-xl font-semibold text-gray-800 dark:text-white">PMS Menu</span>}
         <button

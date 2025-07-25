@@ -6,6 +6,24 @@ import MainLayout from './components/Layout/MainLayout';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import PrivateRoute from './components/PrivateRoute';
+import PapersMasterListPage from './pages/papers/PapersMasterListPage';
+import MachineEntryPage from './pages/papers/MachineEntryPage';
+import BranchListPage from './pages/branches/BranchListPage';
+import ReceivePaperPage from './pages/inventory/ReceivePaperPage';
+import ConsumePaperPage from './pages/inventory/ConsumePaperPage';
+import IssuedPaperPage from './pages/inventory/IssuedPaperPage';
+import ReturnedPaperPage from './pages/inventory/ReturnedPaperPage';
+import DeckleMatchPage from './pages/papers/DeckleMatchPage';
+import AddPaperPage from './pages/papers/AddPaperPage';
+import PaperAdjustmentPage from './pages/papers/PaperAdjustmentPage';
+import TransferPaperPage from './pages/inventory/TransferPaperPage';
+import PendingTransfersPage from './pages/inventory/PendingTransfersPage';
+import RejectPaperPage from './pages/inventory/RejectPaperPage';
+import ActivityLogPage from './pages/reports/ActivityLogPage';
+import StockReportPage from './pages/reports/StockReportPage';
+import TransactionReportPage from './pages/reports/TransactionReportPage';
+import UserManagementPage from './pages/admin/UserManagementPage'; // Import the new page
+import PermissionManagementPage from './pages/admin/PermissionManagementPage'; // Import the new page
 
 // Placeholder for other pages
 const GenericPage = ({ title }) => <div className="p-5"><h1 className="text-2xl">{title}</h1><p>Content for {title} will be here.</p></div>;
@@ -69,37 +87,38 @@ function App() {
         >
           <Route path="/dashboard" element={<DashboardPage />} />
           {/* Inventory Routes */}
-          <Route path="/inventory/consume" element={<GenericPage title="Consume Paper" />} />
-          <Route path="/inventory/receive" element={<GenericPage title="Receive Paper" />} />
-          <Route path="/inventory/reject" element={<GenericPage title="Reject Paper" />} />
-          <Route path="/inventory/transfer" element={<GenericPage title="Transfer Paper" />} />
+          <Route path="/inventory/consume" element={<ConsumePaperPage />} />
+          <Route path="/inventory/receive" element={<ReceivePaperPage />} />
+          <Route path="/inventory/reject" element={<RejectPaperPage />} />
+          <Route path="/inventory/transfer" element={<TransferPaperPage />} />
+          <Route path="/inventory/pending-transfers" element={<PendingTransfersPage />} />
           <Route path="/inventory/issued" element={<GenericPage title="Issued Paper List" />} />
           <Route path="/inventory/returned" element={<GenericPage title="Returned Paper List" />} />
 
           {/* Papers Routes */}
-          <Route path="/papers/add" element={<GenericPage title="Add Paper Master" />} />
-          <Route path="/papers/list" element={<GenericPage title="Papers Master List" />} />
+          <Route path="/papers/add" element={<AddPaperPage />} />
+          <Route path="/papers/list" element={<PapersMasterListPage />} />
           <Route path="/papers/rates" element={<GenericPage title="Rate Management" />} />
-          <Route path="/papers/adjustment" element={<GenericPage title="Paper Adjustment" />} />
-          <Route path="/papers/machines" element={<GenericPage title="Machine Entry" />} />
-          <Route path="/papers/deckle-match" element={<GenericPage title="Deckle Match" />} />
+          <Route path="/papers/adjustment" element={<PaperAdjustmentPage />} />
+          <Route path="/papers/machines" element={<MachineEntryPage />} />
+          <Route path="/papers/deckle-match" element={<DeckleMatchPage />} />
 
           {/* Branch Management Routes */}
-          <Route path="/branches/list" element={<GenericPage title="Branch List" />} />
+          <Route path="/branches/list" element={<BranchListPage />} />
 
           {/* Reports Routes */}
-          <Route path="/reports/stock" element={<GenericPage title="Stock Report" />} />
-          <Route path="/reports/issued" element={<GenericPage title="Issued Report" />} />
-          <Route path="/reports/returned" element={<GenericPage title="Returned Report" />} />
-          <Route path="/reports/transfer" element={<GenericPage title="Transfer Report" />} />
-          <Route path="/reports/rejected" element={<GenericPage title="Rejected Report" />} />
-          <Route path="/reports/consumed" element={<GenericPage title="Consumed Report" />} />
-          <Route path="/reports/receive" element={<GenericPage title="Receive Report" />} />
-          <Route path="/reports/activity-log" element={<GenericPage title="Activity Log" />} />
+          <Route path="/reports/stock" element={<StockReportPage />} />
+          <Route path="/reports/issued" element={<TransactionReportPage reportType="Issued" title="Issued Report" />} />
+          <Route path="/reports/returned" element={<TransactionReportPage reportType="Returned" title="Returned Report" />} />
+          <Route path="/reports/transfer" element={<TransactionReportPage reportType="Transfer" title="Transfer Report" />} />
+          <Route path="/reports/rejected" element={<TransactionReportPage reportType="Rejected" title="Rejected Report" />} />
+          <Route path="/reports/consumed" element={<TransactionReportPage reportType="Consumed" title="Consumed Report" />} />
+          <Route path="/reports/receive" element={<TransactionReportPage reportType="Receive" title="Receive Report" />} />
+          <Route path="/reports/activity-log" element={<ActivityLogPage />} />
 
           {/* Administration Routes */}
-          <Route path="/admin/users" element={<GenericPage title="User Management" />} />
-          <Route path="/admin/permissions" element={<GenericPage title="Permission Management" />} />
+          <Route path="/admin/users" element={<UserManagementPage />} />
+          <Route path="/admin/permissions" element={<PermissionManagementPage />} />
           <Route path="/admin/history" element={<GenericPage title="System History" />} />
 
           {/* Default authenticated route redirect */}

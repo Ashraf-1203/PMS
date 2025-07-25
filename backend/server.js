@@ -1,15 +1,29 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
+const compression = require('compression');
+const rateLimit = require('express-rate-limit');
 const db = require('./config/db');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
+app.use(helmet()); // Set security-related HTTP headers
+app.use(compression()); // Compress all routes
 app.use(cors()); // Enable All CORS Requests for development
 app.use(express.json()); // To parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // To parse URL-encoded bodies
+
+// Rate Limiting
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100, // Limit each IP to 100 requests per windowMs
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+app.use(limiter); // Apply the rate limiting middleware to all requests
 
 // Global Error Handler Middleware (Basic)
 // This should be defined after all routes and other middlewares
@@ -61,14 +75,22 @@ app.get('/', (req, res) => {
 
 // API routes
 const authRoutes = require('./routes/authRoutes');
-// const paperRoutes = require('./routes/paperRoutes'); // To be created
+const paperRoutes = require('./routes/paperRoutes');
+const branchRoutes = require('./routes/branchRoutes');
 // const userRoutes = require('./routes/userRoutes'); // To be created for user management by admin
 // const permissionRoutes = require('./routes/permissionRoutes'); // To be created for permission management
 
 app.use('/api/auth', authRoutes);
-// app.use('/api/users', protect, authorize(['Admin']), userRoutes); // Example for user management
-// app.use('/api/permissions', protect, authorize(['Admin']), permissionRoutes); // Example for permission management
-// app.use('/api/papers', protect, paperRoutes); // Assuming most paper routes need protection
+app.use('/api/papers', paperRoutes); // Protection is handled within the paperRoutes file
+app.use('/api/branches', branchRoutes);
+app.use('/api/machines', require('./routes/machineRoutes'));
+app.use('/api/inventory', require('./routes/inventoryRoutes'));
+app.use('/api/transfers', require('./routes/transferRoutes'));
+app.use('/api/notifications', require('./routes/notificationRoutes'));
+app.use('/api/activity-log', require('./routes/activityLogRoutes'));
+app.use('/api/reports', require('./routes/reportRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/permissions', require('./routes/permissionRoutes'));
 
 
 // Catch-all for 404 Not Found errors

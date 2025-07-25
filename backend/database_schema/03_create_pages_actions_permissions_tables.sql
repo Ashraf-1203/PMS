@@ -47,6 +47,7 @@ BEGIN
     ('Print', 'print', 'Permission to print reports or documents'),
     ('Export', 'export', 'Permission to export data'),
     ('Approve', 'approve', 'Permission to approve requests or actions'),
+    ('Reject', 'reject', 'Permission to reject requests or actions'),
     ('Manage Permissions', 'manage_permissions', 'Permission to manage user/role permissions');
     PRINT 'Common actions seeded into [dbo].[Actions].';
 END
@@ -131,7 +132,8 @@ USING (VALUES
     ('Activity Log', 'activityLog', '/reports/activity-log', 'View system activity log', 'Reports'),
     ('User Management', 'userManagement', '/admin/users', 'Manage users', 'Administration'),
     ('Permission Management', 'permissionManagement', '/admin/permissions', 'Manage role permissions', 'Administration'),
-    ('System History', 'systemHistory', '/admin/history', 'View system history (general)', 'Administration') -- "History" from prompt, clarified scope
+    ('System History', 'systemHistory', '/admin/history', 'View system history (general)', 'Administration'), -- "History" from prompt, clarified scope
+    ('Pending Transfers', 'pendingTransfers', '/inventory/pending-transfers', 'Approve or reject paper transfers', 'Inventory')
 ) AS Source (PageName, PageKey, PagePath, Description, Module)
 ON Target.PageKey = Source.PageKey
 WHEN NOT MATCHED BY TARGET THEN
